@@ -1,24 +1,20 @@
-const counters =document.querySelectorAll('.counter');
+const counters = document.querySelectorAll('.counter');
 
-counters.forEach(counter => {
-    const target = counter.getAttribute('data-target');
-    let i = Math.ceil(Number(target)/ 200);
-    let result = 0;
+counters.forEach(counter=> {
+    counter.innerText = '0';
 
-    const increment = setInterval(()=>{
-        result = result + i;
+    // function updateCounter () {
+    const updateCounter = ()=> {
+        const target = +counter.getAttribute('data-target');
+        const c = +counter.innerText;
+        const increment = target / 200;
 
-        if (result <= Number(target)) {
-            incrementation(result)
-        }else {
-            incrementation(target)
-            clearInterval(increment)
+        if (c < target){
+            counter.innerText = `${Math.ceil(c + increment)}`
+            setTimeout(updateCounter, 1)
+        } else {
+            counter.innerText = target;
         }
-    }, 1)
-
-    function incrementation(result){
-        counter.innerText = result;
     }
+    updateCounter();
 })
-
-
